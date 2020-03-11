@@ -1,0 +1,32 @@
+{
+    "rivers": [
+        {
+            "name": "test",
+            "leds": [
+                0,
+                6
+            ]
+        },
+        {
+            "name": "test",
+            "leds": [
+                0,
+                6
+            ]
+        },
+        {
+            "name": "test",
+            "leds": [
+                0,
+                6
+            ]
+        },
+        {
+            "name": "test",
+            "leds": [
+                0,
+                6
+            ]
+        }
+    ]
+}
