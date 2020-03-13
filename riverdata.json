@@ -1,31 +1,46 @@
 {
+    "movies": [
+        {
+            "id": "beeShort",
+            "url": "./videos/beeShort.mp4"
+        },
+        {
+            "id": "beeLong",
+            "url": "./videos/beeLong.mp4"
+        }
+    ],
     "rivers": [
         {
-            "name": "test",
+            "name": "test0",
+            "trigger": {
+                "movie": "beeShort",
+                "time": 2000
+            },
             "leds": [
                 0,
                 6
             ]
         },
         {
-            "name": "test",
+            "name": "test1",
+            "trigger": {
+                "movie": "beeShort",
+                "time": 3000
+            },
             "leds": [
-                0,
-                6
+                7,
+                15
             ]
         },
         {
-            "name": "test",
+            "name": "test2",
+            "trigger": {
+                "movie": "beeShort",
+                "time": 4000
+            },
             "leds": [
-                0,
-                6
-            ]
-        },
-        {
-            "name": "test",
-            "leds": [
-                0,
-                6
+                16,
+                23
             ]
         }
     ]

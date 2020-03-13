@@ -12,12 +12,19 @@ export class RiverAppContext {
     }
 
     public start(): void {
-        setInterval(this.update, 1000 / 60);
-
-        this.moviePlayer.play("./videos/beeLong.mp4");
+        setInterval(() => {
+            this.update();
+        }, 1000 / 60);
+        // setTimeout(() => alert("never happens"), 1000);
+        this.moviePlayer.play("./videos/beeShort.mp4");
     }
 
     private update(): void {
         this.moviePlayer.update();
+    }
+
+    public destroy(): void {
+        this.moviePlayer.destroy();
+        // this.moviePlayer = null;
     }
 }

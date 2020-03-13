@@ -2,47 +2,98 @@ const { app, BrowserWindow } = require('electron');
 //var Omx = require('node-omxplayer');
 const { RiverAppContext } = require("./build/src/RiverAppContext");
 // const { VLC } = require("./node_modules/vlc/vlc.js");
-let player;
+// const OmxPlayer = require('omxplayer-dbus');
+
+//https://github.com/RandomStudio/omxconductor
+
+const { Player } = require('omxconductor');
+
 let riverApp;
 
+let player;
+
+//export DISPLAY=:0.0
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 function createWindow() {
     // Create the browser window.
     const win = new BrowserWindow({
-        //fullscreen: true,
-        kiosk: true,
+        fullscreen: true,
+        // kiosk: true,
         backgroundColor: "#E5D47D",
         webPreferences: {
             nodeIntegration: true
         }
     });
-    //player = Omx("./videos/beeLong.mp4");
-    // and load the index.html of the app.
-    //win.loadFile('index.html')
 
-    riverApp = new RiverAppContext();
-    riverApp.start();
-    // omxplayer.start("./video/beeLong.mp4", function (error) {
-    //     console.log(error);
-    // });
+    player = new Player('./videos/beeShort.mp4', { loop: false })
+    player.open().then((result) => {
+        console.log('Clip started playing OK! Some information:', result)
+    }).catch((err) => {
+        console.error('error on open:', err);
+    });
 
-    // player.on("close", () => {
-    //     player.newSource("./videos/beeShort.mp4");
-    // });
+    player.on('open', (result) => {
+        console.log('open event:', result);
+    });
+    player.on('progress', (result) => {
+        //console.log('progress event:', result);
+    });
+    player.on('close', (result) => {
+        //console.log('progress event:', result);
+    });
+    player.on('stopped', (result) => {
+        //console.log('progress event:', result);
+    });
 
-    // omxplayer.on("prop:position", function (newPosition) {
+    player.registerPositionTrigger(3000, (actualPosition) => {
+        console.log('hit 3000ms trigger @', actualPosition);
+        //player.seekAbsolute(0)
+    });
 
-    // });
-    // player.play();
-    // Open the DevTools.
-    //win.webContents.openDevTools();
+    player.registerPositionTrigger(4000, (actualPosition) => {
+        console.log('hit 3000ms trigger @', actualPosition);
+
+        // player.pause();
+        player.stop();
+
+        sleep(100).then(() => {
+            console.log("World!")
+
+            // player = new Player('./videos/beeLong.mp4', { loop: false });
+            // player.open().then((result) => {
+            //     console.log('Clip started playing OK! Some information:', result)
+            // }).catch((err) => {
+            //     console.error('error on open:', err);
+            // });;
+        });
+        //player.seekAbsolute(0)
+    });
+    //riverApp = new RiverAppContext();
+    //riverApp.start();
+
+
+    win.on('close', () => {
+        console.log("close");
+        //riverApp.destroy();
+        //riverApp = null;
+    })
 
     win.on('closed', () => {
-        player.quit();
+
+        console.log("closed");
+
+
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         win = null;
     });
+
+    // win.on('error'), () => {
+    //     console.log(error);
+    // }
 }
 
 // This method will be called when Electron has finished
