@@ -9,6 +9,8 @@ export class MoviePlayer {
 
     private player: Player | undefined;
 
+    private isPlaying : boolean = false;
+
     // add url and trigger evnets
     constructor() {
         // this.player = Omx();
@@ -22,6 +24,8 @@ export class MoviePlayer {
         this.player.open();
         this.player.addListener('open', (result) => {
             console.log('open event:', result);
+
+            this.isPlaying = true;
         });
 
         this.player.on('open', (result) => {
@@ -31,11 +35,20 @@ export class MoviePlayer {
             //console.log('progress event:', result);
         });
         this.player.on('close', (result) => {
+            this.isPlaying = false;
             //console.log('progress event:', result);
         });
         this.player.on('stopped', (result) => {
             //console.log('progress event:', result);
+            this.isPlaying = false;
+            this.onStopped(result);
         });
+    }
+
+    private onStopped(event: any): void {
+        this.isPlaying = false;
+        console.log("stopped action");
+        this.player?.removeAllListeners();
     }
 
     public update(): void {
