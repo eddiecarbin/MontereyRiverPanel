@@ -1,30 +1,36 @@
 
 import { Gpio } from "onoff"
+import { EventEmitter as EventDispatcher } from "events"
+import { RiverAppContext } from "./RiverAppContext";
 
-export class ButtonController {
+export class ButtonController extends EventDispatcher {
 
-    private button: Gpio | null | undefined;
+    static readonly BUTTON_EVENT: string = "ButtonController_buttonEvent";
 
-    constructor(pin: number) {
+    private button: Gpio;
 
-        // this.button = new Gpio(pin, 'in', 'rising', { debounceTimeout: 10 });
+    private id: string;
 
-        const led = new Gpio(17, 'out');
-        const button = new Gpio(4, 'in', 'both');
+    constructor(pin: number, id: string) {
+        super();
+        this.button = new Gpio(pin, 'in', 'rising', { debounceTimeout: 10 });
+        this.id = id;
 
-        // this.button.watch((err, value) => {
-        //     if (err) {
-        //         throw err;
-        //     }
-        //     this.onDispatchEvent(value);
-        // });
+        this.button.watch((err, value) => {
+            if (err) {
+                throw err;
+            }
+
+            console.log("a button was pressed");
+            this.onDispatchEvent(value);
+        });
         // process.on('SIGINT', _ => {
         //     this.button?.unexport();
         // });
     }
 
     private onDispatchEvent(event: any): void {
-        console.log("button pressed");
+        this.emit(ButtonController.BUTTON_EVENT, this.id);
     }
 
     public destroy(): void {

@@ -1,46 +1,148 @@
 {
-    "movies": [
+    "totalLeds": 53,
+    "scene": [
         {
-            "id": "beeShort",
-            "url": "./videos/beeShort.mp4"
+            "name": "WatershedState",
+            "movie": "./videos/beeLong.mp4",
+            "triggers": [
+                {
+                    "time": 3000,
+                    "action": {
+                        "command": "rivers",
+                        "riverID": [
+                            "river0",
+                            "river2"
+                        ]
+                    }
+                }
+            ]
         },
         {
-            "id": "beeLong",
-            "url": "./videos/beeLong.mp4"
+            "name": "EelAndRussianState",
+            "movie": "./videos/beeLong.mp4",
+            "triggers": [
+                {
+                    "time": 3000,
+                    "action": {
+                        "command": "rivers",
+                        "riverID": [
+                            "river0",
+                            "river2"
+                        ]
+                    }
+                },
+                {
+                    "time": 5000,
+                    "action": {
+                        "command": "rivers",
+                        "riverID": [
+                            "river1"
+                        ]
+                    }
+                }
+            ],
+            "rivers": [
+                {
+                    "id": "river0",
+                    "led": [
+                        0,
+                        22
+                    ]
+                },
+                {
+                    "id": "river1",
+                    "led": [
+                        10,
+                        28
+                    ]
+                },
+                {
+                    "id": "river2",
+                    "led": [
+                        28,
+                        52
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "HistoricCurrentState",
+            "movie": "./videos/beeLong.mp4",
+            "triggers": [
+                {
+                    "time": 3000,
+                    "action": {
+                        "command": "rivers",
+                        "riverID": [
+                            "river0",
+                            "river2"
+                        ]
+                    }
+                },
+                {
+                    "time": 5000,
+                    "action": {
+                        "command": "rivers",
+                        "riverID": [
+                            "river1"
+                        ]
+                    }
+                }
+            ],
+            "rivers": [
+                {
+                    "id": "river0",
+                    "led": [
+                        0,
+                        22
+                    ]
+                },
+                {
+                    "id": "river1",
+                    "led": [
+                        10,
+                        28
+                    ]
+                },
+                {
+                    "id": "river2",
+                    "led": [
+                        28,
+                        52
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "ProtectedBorderState",
+            "movie": "./videos/beeLong.mp4",
+            "triggers": [
+                {
+                    "time": 3000
+                }
+            ]
         }
     ],
-    "rivers": [
+    "allRivers": [
         {
-            "name": "test0",
-            "trigger": {
-                "movie": "beeShort",
-                "time": 2000
-            },
-            "leds": [
+            "id": "river0",
+            "led": [
                 0,
-                6
+                22
             ]
         },
         {
-            "name": "test1",
-            "trigger": {
-                "movie": "beeShort",
-                "time": 3000
-            },
-            "leds": [
-                7,
-                15
+            "id": "river1",
+            "led": [
+                10,
+                28
             ]
         },
         {
-            "name": "test2",
-            "trigger": {
-                "movie": "beeShort",
-                "time": 4000
-            },
-            "leds": [
-                16,
-                23
+            "id": "river2",
+            "led": [
+                28,
+                52
             ]
         }
     ]

@@ -1,120 +1,45 @@
 const { app, BrowserWindow } = require('electron');
-//var Omx = require('node-omxplayer');
-// const { RiverAppContext } = require("./build/src/RiverAppContext");
-// const { VLC } = require("./node_modules/vlc/vlc.js");
-// const OmxPlayer = require('omxplayer-dbus');
-
-//https://github.com/RandomStudio/omxconductor
-
-// const { Player } = require('omxconductor');
 const { RiverAppContext } = require("./build/src/RiverAppContext");
 
+const SPI = require('pi-spi');
+let spi = SPI.initialize('/dev/spidev0.0');
 let riverApp;
 
-// let player;
-
 //export DISPLAY=:0.0
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+// npx tsc --project tsconfig.json
+
 function createWindow() {
     // Create the browser window.
     const win = new BrowserWindow({
         fullscreen: true,
-        // kiosk: true,
-        backgroundColor: "#E5D47D",
+        backgroundColor: "#000000",
         webPreferences: {
             nodeIntegration: true
         }
     });
 
-    // player = new Player('./videos/beeShort.mp4', { loop: false })
-    // player.open().then((result) => {
-    //     console.log('Clip started playing OK! Some information:', result)
-    // }).catch((err) => {
-    //     console.error('error on open:', err);
-    // });
-
-    // player.on('open', (result) => {
-    //     console.log('open event:', result);
-    // });
-    // player.on('progress', (result) => {
-    //     //console.log('progress event:', result);
-    // });
-    // player.on('close', (result) => {
-    //     //console.log('progress event:', result);
-    // });
-    // player.on('stopped', (result) => {
-    //     //console.log('progress event:', result);
-    // });
-
-    // player.registerPositionTrigger(3000, (actualPosition) => {
-    //     console.log('hit 3000ms trigger @', actualPosition);
-    //     //player.seekAbsolute(0)
-    // });
-
-    // player.registerPositionTrigger(4000, (actualPosition) => {
-    //     console.log('hit 3000ms trigger @', actualPosition);
-
-    //     // player.pause();
-    //     player.stop();
-    //     player = null;
-
-    //     sleep(500).then(() => {
-    //         console.log("World!")
-
-    //         player = new Player('./videos/beeLong.mp4', { loop: false });
-    //         player.open().then((result) => {
-    //             console.log('Clip started playing OK! Some information:', result)
-    //         }).catch((err) => {
-    //             console.error('error on open:', err);
-    //         });;
-
-    //         player.on('open', (result) => {
-    //             console.log('open event:', result);
-    //         });
-    //         player.on('progress', (result) => {
-    //             //console.log('progress event:', result);
-    //         });
-    //         player.on('close', (result) => {
-    //             //console.log('progress event:', result);
-    //         });
-    //         player.on('stopped', (result) => {
-    //             //console.log('progress event:', result);
-
-
-    //         });
-    //     });
-    //     //player.seekAbsolute(0)
-    // });
-
     win.on('close', () => {
         console.log("close");
-
-        player.stop();
-        player = null;
-
-        //riverApp.destroy();
-        //riverApp = null;
     })
 
     win.on('closed', () => {
-
-        console.log("closed");
+        console.log("closed = ");
+        riverApp.destroy();
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
-        win = null;
+        // win = null;
     });
 
-    win.on('error'), () => {
+    win.on('error', () => {
         console.log(error);
-    }
-
+    });
 
     riverApp = new RiverAppContext();
-    riverApp.start();
+    riverApp.start(1000 / 30, spi);
 }
+
+// Create myWindow, load the rest of the app, etc...
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -126,6 +51,10 @@ app.on('window-all-closed', () => {
     // On macOS it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
+        // relay1.unexport();
+        // relay2.unexport();
+        // relay3.unexport();
+        console.log("quit");
         app.quit();
     }
 });
@@ -137,6 +66,5 @@ app.on('activate', () => {
         createWindow();
     };
 });
-
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

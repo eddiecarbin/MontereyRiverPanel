@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "export DISPLAY=:0.0 && electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,13 +19,20 @@
   "homepage": "https://github.com/eddiecarbin/MontereyRiverPanel#readme",
   "devDependencies": {
     "electron": "^8.1.1",
-    "electron-rebuild": "^1.10.1"
+    "electron-rebuild": "^1.10.1",
+    "node-gyp": "^6.1.0",
+    "omxconductor": "^0.3.0"
   },
   "dependencies": {
-    "node-omxplayer": "^0.6.1",
-    "omxconductor": "^0.3.0",
+    "@types/pi-spi": "0.0.28",
+    "dotstar": "^1.0.0",
+    "epoll": "^3.0.0",
+    "events": "^3.1.0",
     "omxplayer-dbus": "^1.0.10",
     "onoff": "^5.0.1",
+    "pi-spi": "^1.2.1",
+    "rpi-gpio": "^2.1.5",
+    "rpio": "^2.1.1",
     "tslib": "^1.11.1",
     "typescript": "^3.8.3"
   }
