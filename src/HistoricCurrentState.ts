@@ -22,7 +22,7 @@ export class HistoricCurrentState extends State {
         this.data = data;
         this.ledController = led;
 
-        let effect: RiverLEDEfx = new RiverLEDEfx(50);
+        let effect: RiverLEDEfx = new RiverLEDEfx(700);
 
         this.ledController.setEffect(effect);
         this.moviePlayer = moviePlayer;
@@ -45,7 +45,7 @@ export class HistoricCurrentState extends State {
     }
 
     public handleActionEvent(eve: any): void {
-        console.log("trigger state event " + eve);
+        //console.log("trigger state event " + eve);
     }
     
     public exit(fsm: IMachine): void {

@@ -13,7 +13,7 @@ export class ButtonController extends EventDispatcher {
 
     constructor(pin: number, id: string) {
         super();
-        this.button = new Gpio(pin, 'in', 'rising', { debounceTimeout: 10 });
+        this.button = new Gpio(pin, 'in', 'rising', { debounceTimeout: 50 });
         this.id = id;
 
         this.button.watch((err, value) => {
@@ -21,7 +21,7 @@ export class ButtonController extends EventDispatcher {
                 throw err;
             }
 
-            console.log("a button was pressed");
+            //console.log("a button was pressed");
             this.onDispatchEvent(value);
         });
         // process.on('SIGINT', _ => {

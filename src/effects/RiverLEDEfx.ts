@@ -4,7 +4,7 @@ import { LEDEffects, RGB, Color } from "./LEDEffects";
 export class RiverLEDEfx extends LEDEffects {
 
     private isForwardDirection: boolean = false;
-    private laserCount: number = 5;
+    private laserCount: number = 20;
     private fadeFactor: number = 0.8;
     private speedFactor: number = 0.01;
 

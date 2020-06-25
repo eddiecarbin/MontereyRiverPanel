@@ -108,7 +108,10 @@ export class Machine implements IMachine {
 		var _newState: IState = this.getState(name);
 
 		if ( _newState == this._currentState)
+		{
+			//console.log("same state no go");
 			return false;
+		}	
 			
 		if (!_newState) {
 			throw new Error("State named:" + name);

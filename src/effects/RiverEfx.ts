@@ -5,14 +5,14 @@ export class RiverLEDEfx extends LEDEffects {
 
     private isForwardDirection: boolean = false;
     private laserCount: number = 5;
-    private fadeFactor: number = 0.8;
-    private speedFactor: number = 0.01;
+    private fadeFactor: number = 0.6;
+    private speedFactor: number = 0.03;
 
-    private useBlueLightning: boolean = true;
+    private useBlueLightning: boolean = false;
 
     private ambientR: number = 0;
     private ambientG: number = 0;
-    private ambientB: number = 10;
+    private ambientB: number = 0;
 
     private laserRGB: Array<number>;
 
@@ -26,7 +26,7 @@ export class RiverLEDEfx extends LEDEffects {
         super(count);
         this.paletteRGBs.push(this.packRGB(13, 140, 255));
         this.paletteRGBs.push(this.packRGB(12, 100, 232));
-        this.paletteRGBs.push(this.packRGB(0, 120, 208));
+        this.paletteRGBs.push(this.packRGB(0, 80, 134));
         this.paletteRGBs.push(this.packRGB(12, 148, 232));
         this.paletteRGBs.push(this.packRGB(13, 114, 255));
 

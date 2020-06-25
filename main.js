@@ -36,7 +36,7 @@ function createWindow() {
     });
 
     riverApp = new RiverAppContext();
-    riverApp.start(1000 / 30, spi);
+    riverApp.start(1000 / 15, spi);
 }
 
 // Create myWindow, load the rest of the app, etc...

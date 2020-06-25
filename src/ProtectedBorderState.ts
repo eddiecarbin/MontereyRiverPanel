@@ -1,9 +1,8 @@
 import { State } from "./state/State";
 import { MoviePlayer } from "./MoviePlayer";
 import { IMachine } from "./state/IMachine";
-import { RelayController } from "./RelayController";
+import { RelayController, RelayState } from "./RelayController";
 import { AppParam, Scene, Trigger } from "./AppParam";
-
 import appJson from '../riverdata.json'; // This import style requires "esModuleInterop", see "side notes"
 
 export class ProtectedBorderState extends State {
@@ -26,8 +25,8 @@ export class ProtectedBorderState extends State {
     }
 
     public enter(fsm: IMachine): void {
-        this.relayController.state = true;
-        this.moviePlayer.play(this.data.movie, true);
+        this.relayController.state = RelayState.ON;
+        this.moviePlayer.play("./videos/beeShort.mp4", true);
         if (this.data.triggers.length > 0) {
             let trigger: Trigger;
             for (let i = 0; i < this.data.triggers.length; ++i) {
@@ -39,11 +38,11 @@ export class ProtectedBorderState extends State {
     }
 
     public handleActionEvent(eve: any): void {
-        console.log("trigger state event " + eve);
+        //console.log("trigger state event " + eve);
     }
 
     public exit(fsm: IMachine): void {
-        this.relayController.state = false;
+        this.relayController.state = RelayState.OFF;
         this.moviePlayer.stop();
         this.moviePlayer.removeAllListeners();
     }

@@ -20,7 +20,7 @@ export class EelAndRussianState extends State {
         this.data = data;
         this.ledController = led;
 
-        let effect: RiverLEDEfx = new RiverLEDEfx(50);
+        let effect: RiverLEDEfx = new RiverLEDEfx(700);
 
         this.ledController.setEffect(effect);
         this.moviePlayer = moviePlayer;
@@ -37,13 +37,13 @@ export class EelAndRussianState extends State {
                 this.moviePlayer.addTrigger(trigger.time);
             }
 
-            console.log("add some triggers");
+            //console.log("add some triggers");
             this.moviePlayer.on(MoviePlayer.MOVIE_TRIGGER_EVENT, (eve) => { this.handleActionEvent(eve) });
         }
     }
 
     public handleActionEvent(eve: any): void {
-        console.log("trigger state event " + eve);
+        //console.log("trigger state event " + eve);
     }
 
     public exit(fsm: IMachine): void {
