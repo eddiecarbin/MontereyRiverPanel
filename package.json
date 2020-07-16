@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/eddiecarbin/MontereyRiverPanel#readme",
   "devDependencies": {
-    "electron": "^8.1.1",
+    "electron": "^8.2.4",
     "electron-rebuild": "^1.10.1",
     "node-gyp": "^6.1.0",
     "omxconductor": "^0.3.0"
