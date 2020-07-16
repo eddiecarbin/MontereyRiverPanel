@@ -1,4 +1,4 @@
-import { State } from "./state/State";
+import { State, Stage } from "./state/State";
 import { MoviePlayer } from "./MoviePlayer";
 import { IMachine } from "./state/IMachine";
 import { LedController } from "./LedController";
@@ -20,15 +20,29 @@ export class EelAndRussianState extends State {
         this.data = data;
         this.ledController = led;
 
-        let effect: RiverLEDEfx = new RiverLEDEfx(700);
-
-        this.ledController.setEffect(effect);
         this.moviePlayer = moviePlayer;
     }
 
     public enter(fsm: IMachine): void {
+        super.enter(fsm);
+
         console.log(this.name);
-        this.moviePlayer.play("./videos/beeShort.mp4");
+
+        let rivers = this.data.rivers
+
+        console.log( rivers );
+
+        this.ledController.reset();
+        for (let i = 0; i < rivers.length; ++i) {
+
+            this.ledController.activiateRiver(rivers[i]);
+
+        }
+
+        //this.moviePlayer.play("./videos/Test0.mp4");
+        this.moviePlayer.play(this.data.movie);
+        this.moviePlayer.on(MoviePlayer.MOVIE_PLAYING_EVENT, (eve) => { this.handleActionEvent(eve) });
+
 
         if (this.data.triggers.length > 0) {
             let trigger: Trigger;
@@ -44,9 +58,14 @@ export class EelAndRussianState extends State {
 
     public handleActionEvent(eve: any): void {
         //console.log("trigger state event " + eve);
+
+        this._stage = Stage.READY;
+
     }
 
     public exit(fsm: IMachine): void {
+        super.exit(fsm);
+
         this.moviePlayer.stop();
         this.moviePlayer.removeAllListeners();
         this.ledController.stop();

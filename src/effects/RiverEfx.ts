@@ -23,7 +23,7 @@ export class RiverLEDEfx extends LEDEffects {
     private pixelRGBs: Array<number>;
 
     constructor(count: number) {
-        super(count);
+        super("n", 2, count);
         this.paletteRGBs.push(this.packRGB(13, 140, 255));
         this.paletteRGBs.push(this.packRGB(12, 100, 232));
         this.paletteRGBs.push(this.packRGB(0, 80, 134));

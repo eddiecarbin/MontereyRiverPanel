@@ -11,7 +11,10 @@ export interface Trigger {
     action: Action;
 }
 
-export interface River {
+// export interface River {
+//     id: string;
+// }
+export interface RiverData {
     id: string;
     led: number[];
 }
@@ -20,7 +23,13 @@ export interface Scene {
     name: string;
     movie: string;
     triggers: Trigger[];
-    rivers: River[];
+    rivers: string[];
+}
+
+export interface Effect {
+    count: number;
+    fade: number;
+    speed: number;
 }
 
 export interface AllRiver {
@@ -31,7 +40,8 @@ export interface AllRiver {
 export interface RootObject {
     totalLeds: number;
     scene: Scene[];
-    allRivers: AllRiver[];
+    effect: Effect;
+    allRivers: RiverData[];
 }
 
 export class Utils {

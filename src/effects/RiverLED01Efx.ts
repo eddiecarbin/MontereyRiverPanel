@@ -14,7 +14,7 @@ export class RiverLED01Efx extends LEDEffects {
     private timer: number = 0;
 
     constructor(count: number) {
-        super(count);
+        super("count", 9, 3);
 
         this.pixels = this.createArray(this.pixelCount);
         this.boltMax = Math.ceil(this.pixelCount / 6)

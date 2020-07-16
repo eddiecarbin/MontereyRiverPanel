@@ -1,6 +1,7 @@
 
 
 import { IMachine } from "./IMachine";
+import { Stage } from "./State";
 
 /**
  * A state in a state machine. It is given the opportunity each
@@ -28,4 +29,6 @@ export interface IState {
 	tick(fsm: IMachine): void;
 
 	stateMachine: IMachine;
+
+	stage:Stage;
 }

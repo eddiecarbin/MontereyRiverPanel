@@ -3,16 +3,23 @@ import { LEDEffects, RGB, Color } from "./LEDEffects";
 
 export class RiverLEDEfx extends LEDEffects {
 
-    private isForwardDirection: boolean = false;
-    private laserCount: number = 20;
-    private fadeFactor: number = 0.8;
-    private speedFactor: number = 0.01;
+    // private isForwardDirection: boolean = false;
+    // private laserCount: number = 5;
+    // private fadeFactor: number = 0.6;
+    // private speedFactor: number = 0.03;
 
-    private useBlueLightning: boolean = true;
+    // private useBlueLightning: boolean = false;
+
+    public isForwardDirection: boolean = false;
+    public laserCount: number = 10;
+    public fadeFactor: number = 0.8;
+    public speedFactor: number = 0.08;
+
+    private useBlueLightning: boolean = false;
 
     private ambientR: number = 0;
     private ambientG: number = 0;
-    private ambientB: number = 10;
+    private ambientB: number = 80;
 
     private laserRGB: Array<number>;
 
@@ -22,11 +29,12 @@ export class RiverLEDEfx extends LEDEffects {
 
     private pixelRGBs: Array<number>;
 
-    constructor(count: number) {
-        super(count);
+    constructor(name: string, start: number, end: number) {
+        super(name, start, end);
         this.paletteRGBs.push(this.packRGB(13, 140, 255));
         this.paletteRGBs.push(this.packRGB(12, 100, 232));
-        this.paletteRGBs.push(this.packRGB(0, 120, 208));
+        // this.paletteRGBs.push(this.packRGB(0, 120, 208));
+        this.paletteRGBs.push(this.packRGB(0, 0, 0));
         this.paletteRGBs.push(this.packRGB(12, 148, 232));
         this.paletteRGBs.push(this.packRGB(13, 114, 255));
 

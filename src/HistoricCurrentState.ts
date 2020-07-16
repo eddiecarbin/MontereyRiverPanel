@@ -1,11 +1,10 @@
 
-import { State } from "./state/State";
+import { State, Stage } from "./state/State";
 import { MoviePlayer } from "./MoviePlayer";
 import { IMachine } from "./state/IMachine";
-import { RelayController } from "./RelayController";
 import { AppParam, Scene, Trigger } from "./AppParam";
 import { LedController } from "./LedController";
-import { RiverLEDEfx } from "./effects/RiverLEDEfx";
+// import { RiverEfxModel } from "./effects/RiverEfxModel";
 
 export class HistoricCurrentState extends State {
 
@@ -21,16 +20,25 @@ export class HistoricCurrentState extends State {
         super(HistoricCurrentState.NAME);
         this.data = data;
         this.ledController = led;
-
-        let effect: RiverLEDEfx = new RiverLEDEfx(700);
-
-        this.ledController.setEffect(effect);
         this.moviePlayer = moviePlayer;
     }
 
     public enter(fsm: IMachine): void {
+        super.enter(fsm);
+
+        let rivers = this.data.rivers
+        this.ledController.reset();
+        console.log( rivers );
+        for (let i = 0; i < rivers.length; ++i) {
+
+            this.ledController.activiateRiver(rivers[i]);
+
+        }
+
         console.log(this.name);
-        this.moviePlayer.play("./videos/beeShort.mp4");
+        this.moviePlayer.play(this.data.movie);
+
+        this.moviePlayer.on(MoviePlayer.MOVIE_PLAYING_EVENT, (eve) => { this.handleActionEvent(eve) });
 
         if (this.data.triggers.length > 0) {
             let trigger: Trigger;
@@ -39,15 +47,17 @@ export class HistoricCurrentState extends State {
                 this.moviePlayer.addTrigger(trigger.time);
             }
 
-            console.log("add some triggers");
+            // console.log("add some triggers");
             this.moviePlayer.on(MoviePlayer.MOVIE_TRIGGER_EVENT, (eve) => { this.handleActionEvent(eve) });
         }
     }
 
     public handleActionEvent(eve: any): void {
         //console.log("trigger state event " + eve);
+        this._stage = Stage.READY;
+
     }
-    
+
     public exit(fsm: IMachine): void {
         this.moviePlayer.stop();
         this.moviePlayer.removeAllListeners();

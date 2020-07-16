@@ -1,1 +1,4 @@
 start new project
+
+npx tsc --project tsconfig.json
+

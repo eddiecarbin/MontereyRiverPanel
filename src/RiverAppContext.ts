@@ -11,6 +11,8 @@ import { EelAndRussianState } from './EelAndRussianState';
 import { AppParam, Utils, RootObject } from './AppParam';
 import { LedController } from './LedController';
 import { RelayController, RelayState } from './RelayController';
+import { IState } from './state/IState';
+import { Stage } from './state/State';
 
 /*
 https://www.waveshare.com/wiki/RPi_Relay_Board
@@ -30,6 +32,11 @@ https://learn.adafruit.com/adafruit-dotstar-leds/python-circuitpython
 https://learn.adafruit.com/adafruit-dotstar-leds/python-circuitpython
 http://json2ts.com/#
 
+"led": [
+                1,
+                114
+            ]
+            
 */
 
 export class RiverAppContext {
@@ -54,15 +61,21 @@ export class RiverAppContext {
 
     public start(fps: number, spi: any): void {
 
-        this.ledController = new LedController(spi, appJson.totalLeds);
+        let appData: RootObject = appJson as RootObject;
 
+        this.ledController = new LedController(spi, appJson.totalLeds);
+        console.log("total: " + appJson.totalLeds);
+        console.log("all: " + appJson.allRivers);
+        this.ledController.buildRivers(appJson.allRivers);
+
+        // button controller
         this.protectedBorderButton.on(ButtonController.BUTTON_EVENT, (eve) => { this.handleEvent(eve) });
         this.watershedButton.on(ButtonController.BUTTON_EVENT, (eve) => { this.handleEvent(eve) });
         this.currentAndHistoricRiver.on(ButtonController.BUTTON_EVENT, (eve) => { this.handleEvent(eve) });
         this.eelAndRussianButton.on(ButtonController.BUTTON_EVENT, (eve) => { this.handleEvent(eve) });
-        
-        let appData: RootObject = appJson as RootObject;
-        
+
+
+        // each movie state
         this.riverStateMachine.addState(ProtectedBorderState.NAME, new ProtectedBorderState(this.moviePlayer, Utils.getSceneByName(ProtectedBorderState.NAME, appData.scene)));
         this.riverStateMachine.addState(WatershedState.NAME, new WatershedState(this.moviePlayer, Utils.getSceneByName(WatershedState.NAME, appData.scene)));
         this.riverStateMachine.addState(EelAndRussianState.NAME, new EelAndRussianState(this.moviePlayer, this.ledController, Utils.getSceneByName(EelAndRussianState.NAME, appData.scene)));
@@ -78,8 +91,9 @@ export class RiverAppContext {
         this.relayController2 = new RelayController(AppParam.RelayChannel2);
         this.relayController2.state = RelayState.ON;
         */
-        this.riverStateMachine.setCurrentState(ProtectedBorderState.NAME);
-     
+        // this.riverStateMachine.setCurrentState(ProtectedBorderState.NAME);
+        this.riverStateMachine.setCurrentState(HistoricCurrentState.NAME);
+
         setInterval(() => {
             this.update();
         }, fps);
@@ -90,7 +104,15 @@ export class RiverAppContext {
     private handleEvent(state: string): void {
 
         console.log("state = " + state);
+        return;
+        let s: IState = this.riverStateMachine.getCurrentState();
+
         this.riverStateMachine.setCurrentState(state);
+        if (s && s.stage == Stage.READY) {
+        }
+        else {
+            //console.log("not ready state movie still playing");
+        }
     }
 
     private update(): void {
@@ -99,8 +121,8 @@ export class RiverAppContext {
 
     public destroy(): void {
 
-       /*  this.relayController0.state =  RelayState.OFF;
-        this.relayController1.state =  RelayState.OFF; */
+        /*  this.relayController0.state =  RelayState.OFF;
+         this.relayController1.state =  RelayState.OFF; */
         this.riverStateMachine.destroy();
         this.ledController.destroy();
         this.moviePlayer.destroy();

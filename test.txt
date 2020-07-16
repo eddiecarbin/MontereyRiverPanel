@@ -1,3 +1,14 @@
 # allows you to ssh display
 # https://raspberrypi.stackexchange.com/questions/83245/pygame-run-on-external-screen-using-ssh
 # export DISPLAY=:0.0
+
+https://weworkweplay.com/play/raspberry-pi-nodejs/
+
+https://pm2.keymetrics.io/docs/usage/quick-start/
+
+https://learn.adafruit.com/dotstar-pi-painter/assembly-part-1
+1085
+// home 
+gizmo
+pi 
+admin

@@ -3,11 +3,18 @@ import { Player } from "omxconductor";
 import { EventEmitter } from "events";
 //https://github.com/RandomStudio/omxconductor
 
+
+export enum PlayerState {
+
+}
+
 export class MoviePlayer extends EventEmitter {
 
     static readonly MOVIE_TRIGGER_EVENT: string = "MoviePlayer_MovieTriggerEvent";
 
     static readonly MOVIE_COMPLETE_EVENT: string = "MoviePlayer_MovieCompleteEvent";
+
+    static readonly MOVIE_PLAYING_EVENT: string = "MoviePlayer_MoviePlaying";
 
     private player: Player | undefined;
 
@@ -20,6 +27,8 @@ export class MoviePlayer extends EventEmitter {
     private progress: number;
 
     private eventCount: number;
+
+
 
     // add url and trigger evnets
     constructor() {
@@ -34,6 +43,7 @@ export class MoviePlayer extends EventEmitter {
         this.player = new Player(url, { loop: loop });
         this.player.open().then((result) => {
             // console.log('Clip started playing OK! Some information:', result)
+            this.emit(MoviePlayer.MOVIE_PLAYING_EVENT, "Movie Playing");
         }).catch((err) => {
             console.error('error on open:', err);
         });;

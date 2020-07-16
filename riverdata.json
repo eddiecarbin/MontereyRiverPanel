@@ -1,5 +1,10 @@
 {
-    "totalLeds": 700,
+    "totalLeds": 999,
+    "effect": {
+        "count": 5,
+        "fade": 0.8,
+        "speed": 0.03
+    },
     "scene": [
         {
             "name": "WatershedState",
@@ -19,7 +24,7 @@
         },
         {
             "name": "EelAndRussianState",
-            "movie": "./videos/beeLong.mp4",
+            "movie": "./videos/Test0.mp4",
             "triggers": [
                 {
                     "time": 3000,
@@ -42,32 +47,12 @@
                 }
             ],
             "rivers": [
-                {
-                    "id": "river0",
-                    "led": [
-                        0,
-                        22
-                    ]
-                },
-                {
-                    "id": "river1",
-                    "led": [
-                        10,
-                        28
-                    ]
-                },
-                {
-                    "id": "river2",
-                    "led": [
-                        28,
-                        52
-                    ]
-                }
+                "river0"
             ]
         },
         {
             "name": "HistoricCurrentState",
-            "movie": "./videos/beeLong.mp4",
+            "movie": "./videos/Test2.mp4",
             "triggers": [
                 {
                     "time": 3000,
@@ -90,27 +75,8 @@
                 }
             ],
             "rivers": [
-                {
-                    "id": "river0",
-                    "led": [
-                        0,
-                        22
-                    ]
-                },
-                {
-                    "id": "river1",
-                    "led": [
-                        10,
-                        28
-                    ]
-                },
-                {
-                    "id": "river2",
-                    "led": [
-                        28,
-                        52
-                    ]
-                }
+                "river0",
+                "river1"
             ]
         },
         {
@@ -127,22 +93,22 @@
         {
             "id": "river0",
             "led": [
-                0,
-                22
+                350,
+                500
             ]
         },
         {
             "id": "river1",
             "led": [
-                10,
-                28
+                850,
+                980
             ]
         },
         {
             "id": "river2",
             "led": [
-                28,
-                52
+                230,
+                320
             ]
         }
     ]

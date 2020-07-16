@@ -25,6 +25,10 @@ export class HSV extends Color {
 
 export class LEDEffects {
 
+    public name: string;
+
+    private _start: number;
+    private _end: number;
 
     protected paletteRGBs: Array<number> = new Array();
 
@@ -32,8 +36,17 @@ export class LEDEffects {
 
     protected RGB: RGB = new RGB();
 
-    constructor(count: number) {
-        this.pixelCount = count;
+    constructor(name: string, start: number, end: number) {
+        
+        this.name = name;
+        this._start = start;
+        this._end = end;
+        
+        this.pixelCount = this.total;
+
+        console.log( "loaded river = " + this.name + " , start = " + this._start);
+
+
     }
     protected clamp(num: number, min: number, max: number): number {
         return Math.min(Math.max(min, num), max);
@@ -59,6 +72,14 @@ export class LEDEffects {
             arr[i] = isFn ? valueOrFn(i) : valueOrFn;
         }
         return arr
+    }
+
+    public get start(): number {
+        return this._start;
+    }
+
+    public get total(): number {
+        return this._end - this._start;
     }
 
     protected packRGB(r: number, g: number, b: number): number { return this._packColor(r, g, b) }

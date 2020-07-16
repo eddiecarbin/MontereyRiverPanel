@@ -4,8 +4,9 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "export DISPLAY=:0.0 && electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "startlocal": "export DISPLAY=:0.0 && electron .",
+    "start": "electron .",
+    "test": "echo \"hi again\" && exit 0"
   },
   "repository": {
     "type": "git",

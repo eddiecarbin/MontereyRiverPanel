@@ -1,4 +1,4 @@
-import { State } from "./state/State";
+import { State, Stage } from "./state/State";
 import { MoviePlayer } from "./MoviePlayer";
 import { IMachine } from "./state/IMachine";
 import { RelayController, RelayState } from "./RelayController";
@@ -23,9 +23,15 @@ export class WatershedState extends State {
     }
 
     public enter(fsm: IMachine): void {
+        super.enter(fsm);
+
         this.relayController.state = RelayState.ON;
         console.log(this.data.movie);
-        this.moviePlayer.play("./videos/beeShort.mp4");
+        //this.moviePlayer.play("./videos/beeShort.mp4");
+        this.moviePlayer.play(this.data.movie);
+        
+        this.moviePlayer.on(MoviePlayer.MOVIE_PLAYING_EVENT, (eve) => { this.handleActionEvent(eve) });
+
         if (this.data.triggers.length > 0) {
             let trigger: Trigger;
             for (let i = 0; i < this.data.triggers.length; ++i) {
@@ -40,9 +46,13 @@ export class WatershedState extends State {
 
     public handleActionEvent(eve: any): void {
         //console.log("trigger state event " + eve);
+        this._stage = Stage.READY;
+        
     }
 
     public exit(fsm: IMachine): void {
+        super.exit(fsm);
+
         this.relayController.state = RelayState.OFF;
         this.moviePlayer.stop();
         this.moviePlayer.removeAllListeners();
